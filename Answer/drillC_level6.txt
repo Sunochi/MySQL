@@ -1,0 +1,11 @@
+53. SELECT 名称 AS なまえ, HP AS 現在のHP, TRUNCATE(HP / ( SELECT SUM(HP) FROM パーティー) * 100 + 0.05, 1) AS パーティーでの割合 FROM パーティー WHERE 職業コード = '01';
+54. UPDATE パーティー SET MP = MP + (SELECT FLOOR( SUM(MP) * 0.1 + 0.5 ) FROM (SELECT MP FROM パーティー WHERE 職業コード <> '20') as tmp) WHERE 職業コード = '20';
+// MySQLだとサブクエリで同テーブルを操作できないので、該当テーブルをAS tmpで取得して扱う必要がある。
+55. SELECT イベント番号, クリア結果 FROM 経験イベント WHERE クリア区分 = '1' AND イベント番号 IN ((SELECT イベント番号 FROM イベント WHERE タイプ = '1' OR タイプ = '3'));
+56. SELECT 名称 AS キャラクター名, MP FROM パーティー WHERE MP = (SELECT MAX(MP) FROM パーティー);
+57. SELECT イベント番号, イベント名称 FROM イベント WHERE イベント番号 NOT IN ((SELECT イベント番号 FROM 経験イベント)) ORDER BY イベント番号;
+58. SELECT COUNT(イベント番号) AS 未経験イベント数 FROM イベント WHERE イベント番号 NOT IN ((SELECT イベント番号 FROM 経験イベント));
+59. SELECT イベント番号, イベント名称 FROM イベント WHERE イベント番号 < (SELECT イベント番号 FROM 経験イベント WHERE ルート番号 = 5);
+60. SELECT イベント番号, イベント名称, 前提イベント番号 FROM イベント WHERE 前提イベント番号 IN ((SELECT イベント番号 FROM 経験イベント WHERE クリア区分 = '1'));
+61-1. UPDATE 経験イベント SET クリア区分 = '1', クリア結果 = 'B' WHERE イベント番号 = '9'; 
+61-2. INSERT INTO 経験イベント VALUES ((SELECT イベント番号 FROM イベント WHERE 前提イベント番号 = 9), '0', NULL , (SELECT MAX(ルート番号) + 1 FROM (SELECT ルート番号 FROM 経験イベント) as tmp));
