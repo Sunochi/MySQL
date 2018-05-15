@@ -1,0 +1,9 @@
+62. SELECT a.ルート番号, a.イベント番号, b.イベント名称, a.クリア結果 FROM 経験イベント AS a JOIN イベント AS b ON a.イベント番号 = b.イベント番号 WHERE a.クリア区分 = '1' ORDER BY a.ルート番号 ASC;
+63. SELECT a.イベント番号, b.イベント名称, a.クリア結果 FROM 経験イベント AS a JOIN イベント AS b ON a.イベント番号 = b.イベント番号 WHERE a.クリア区分 = '1' AND b.タイプ = '1';
+64. SELECT a.イベント番号, a.イベント名称, COALESCE(b.クリア結果, '未クリア' ) FROM イベント AS a LEFT JOIN 経験イベント AS b ON a.イベント番号 = b.イベント番号 WHERE a.タイプ = '1';
+65. SELECT a.ID, a.名称 AS なまえ, b.コード名称 AS 職業, c.コード名称 AS 状態 FROM パーティー AS a JOIN (SELECT コード値, コード名称 FROM コード WHERE コード種別 = '1') AS b ON a.職業コード = b.コード値 JOIN (SELECT コード値, コード名称 FROM コード WHERE コード種別 = '2') AS c ON a.状態コード = c.コード値 ORDER BY a.ID;
+66. SELECT a.ID, COALESCE(a.名称, '仲間になっていない！' ) AS なまえ, b.コード名称 AS 職業 FROM パーティー AS a RIGHT JOIN (SELECT コード値, コード名称 FROM コード WHERE コード種別 = '1') AS b ON a.職業コード = b.コード値;
+67. SELECT a.イベント番号, a.クリア区分, CONCAT( CONCAT(b.コード値, '：'), b.コード名称 ) AS クリア結果 FROM 経験イベント AS a LEFT JOIN (SELECT コード値, コード名称 FROM コード WHERE コード種別 ='4') AS b ON a.クリア結果 = b.コード値;
+68. SELECT a.イベント番号, a.イベント名称, a.前提イベント番号, b.イベント名称 AS 前提イベント名称 FROM イベント AS a JOIN イベント AS b ON a.前提イベント番号 = b.イベント番号 WHERE a.前提イベント番号 IS NOT NULL;
+69. SELECT a.イベント番号, a.イベント名称, a.前提イベント番号, b.イベント名称 AS 前提イベント名称, a.後続イベント番号, c.イベント名称 AS 後続イベント名称 FROM イベント AS a JOIN イベント AS b ON a.前提イベント番号 = b.イベント番号 LEFT JOIN イベント AS c ON a.後続イベント番号 = c.イベント番号 WHERE a.前提イベント番号 IS NOT NULL OR a.後続イベント番号 IS NOT NULL;
+70. SELECT a.イベント番号, a.イベント名称, b.前提イベント数 FROM イベント AS a JOIN (SELECT 前提イベント番号, COUNT(前提イベント番号) AS 前提イベント数 FROM イベント WHERE 前提イベント番号 IS NOT NULL GROUP BY 前提イベント番号) AS b ON a.イベント番号 = b.前提イベント番号 ORDER BY a.イベント番号;
