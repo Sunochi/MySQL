@@ -1,0 +1,7 @@
+1. SELECT ID, 名称, 職業コード, HP, MP, 状態コード FROM パーティー;
+2. SELECT ID, 名称 as なまえ, HP as 現在のHP, MP as 現在のMP FROM パーティー;
+3. SELECT * FROM イベント;
+4. SELECT イベント番号 as 番号, イベント名称 as 場面 FROM イベント;
+5-1. INSERT INTO パーティー (ID, 名称, 職業コード, HP, MP) VALUES ('A01', 'スガワラ', '21', 131, 232);
+5-2. INSERT INTO パーティー (ID, 名称, 職業コード, HP, MP) VALUES ('A02', 'オーエ', '10', 156, 84);
+5-3. INSERT INTO パーティー (ID, 名称, 職業コード, HP, MP) VALUES ('A03', 'イズミ', '20', 84, 190);
